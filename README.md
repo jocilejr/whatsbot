@@ -29,19 +29,22 @@ cd whatsapp-bot-system
 python main.py
 ```
 
-O sistema estará disponível em: **http://localhost:8000**
+O sistema estará disponível em: **http://78.46.250.112/**
 
 ### Opções de Execução
 
 ```bash
-# Servidor padrão (localhost:8000)
+# Servidor padrão (acesso: http://78.46.250.112/)
 python main.py
 
 # Porta customizada
 python main.py --port 8080
 
-# Aceitar conexões externas
-python main.py --host 0.0.0.0
+# Restringir acesso apenas ao servidor
+python main.py --host 127.0.0.1
+
+# Definir URL pública personalizada
+python main.py --public-url http://meuservidor.com/
 
 # Modo desenvolvimento (auto-reload)
 python main.py --dev
@@ -63,7 +66,7 @@ python main.py --skip-install
 
 ### 1. Primeiro Acesso
 
-1. Abra **http://localhost:8000** no navegador
+1. Abra **http://78.46.250.112/** no navegador
 2. Clique no rodapé da sidebar para criar seu primeiro usuário
 3. Preencha nome, usuário e senha
 4. Pronto! Você estará logado no sistema
