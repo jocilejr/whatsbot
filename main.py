@@ -12,7 +12,9 @@ Uso:
 Exemplos:
     python main.py                    # Servidor padrão (acesso: http://78.46.250.112/)
     python main.py --port 8080        # Porta customizada
+alterar-ip-de-acesso-para-78.46.250.112-gi6zdu
     python main.py --host 78.46.250.112   # Definir IP específico
+
     python main.py --public-url http://meuservidor.com/   # URL pública personalizada
     python main.py --dev              # Modo desenvolvimento (auto-reload)
 """
@@ -34,7 +36,9 @@ REQUIRED_PACKAGES = [
 ]
 
 # Configurações padrão que podem ser sobrescritas via variáveis de ambiente
+alterar-ip-de-acesso-para-78.46.250.112-gi6zdu
 DEFAULT_HOST = os.getenv('WHATSAPP_BOT_HOST', '78.46.250.112')
+
 try:
     DEFAULT_PORT = int(os.getenv('WHATSAPP_BOT_PORT', '8000'))
 except ValueError:
@@ -154,7 +158,9 @@ def main():
 Exemplos de uso:
   python main.py                    # Servidor padrão (acesso: http://78.46.250.112/)
   python main.py --port 8080        # Porta customizada
+alterar-ip-de-acesso-para-78.46.250.112-gi6zdu
   python main.py --host 78.46.250.112   # Definir IP específico
+
   python main.py --public-url http://meuservidor.com/   # URL pública personalizada
   python main.py --dev              # Modo desenvolvimento (auto-reload)
         """

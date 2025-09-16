@@ -73,9 +73,11 @@ Pronto! Você estará logado no sistema.
 python main.py --port 8080
 ```
 
+alterar-ip-de-acesso-para-78.46.250.112-gi6zdu
 ### Definir explicitamente o IP do servidor
 ```bash
 python main.py --host 78.46.250.112
+
 ```
 
 ### Modo desenvolvimento (auto-reload)
