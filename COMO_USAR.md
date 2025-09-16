@@ -8,11 +8,11 @@
 python main.py
 ```
 
-O sistema será iniciado em **http://localhost:8000**
+O sistema será iniciado em **http://78.46.250.112/**
 
 ### 2. Primeiro Acesso
 
-1. **Abra o navegador** em `http://localhost:8000`
+1. **Abra o navegador** em `http://78.46.250.112/`
 2. **Clique no rodapé** da sidebar (área do usuário)
 3. **Clique em "Novo usuário"**
 4. **Preencha os dados:**
@@ -73,9 +73,9 @@ Pronto! Você estará logado no sistema.
 python main.py --port 8080
 ```
 
-### Aceitar conexões externas
+### Definir explicitamente o IP do servidor
 ```bash
-python main.py --host 0.0.0.0
+python main.py --host 78.46.250.112
 ```
 
 ### Modo desenvolvimento (auto-reload)
@@ -88,11 +88,16 @@ python main.py --dev
 python main.py --skip-install
 ```
 
+### Definir URL pública personalizada
+```bash
+python main.py --public-url http://meuservidor.com/
+```
+
 ## 🌐 Acessos Importantes
 
-- **Sistema Principal**: http://localhost:8000
-- **API Docs (Swagger)**: http://localhost:8000/docs
-- **API Docs (ReDoc)**: http://localhost:8000/redoc
+- **Sistema Principal**: http://78.46.250.112/
+- **API Docs (Swagger)**: http://78.46.250.112/docs
+- **API Docs (ReDoc)**: http://78.46.250.112/redoc
 
 ## 📁 Estrutura de Arquivos
 
