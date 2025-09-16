@@ -7,12 +7,13 @@ Sistema completo de gestão de chatbot do WhatsApp com interface web.
 Execute este arquivo para iniciar o sistema completo.
 
 Uso:
-    python main.py [--host HOST] [--port PORT] [--dev]
+    python main.py [--host HOST] [--port PORT] [--public-url URL] [--dev]
 
 Exemplos:
-    python main.py                    # Servidor padrão (localhost:8000)
+    python main.py                    # Servidor padrão (acesso: http://78.46.250.112/)
     python main.py --port 8080        # Porta customizada
-    python main.py --host 0.0.0.0     # Aceitar conexões externas
+    python main.py --host 127.0.0.1   # Forçar acesso apenas local
+    python main.py --public-url http://meuservidor.com/   # URL pública personalizada
     python main.py --dev              # Modo desenvolvimento (auto-reload)
 """
 
@@ -31,6 +32,14 @@ REQUIRED_PACKAGES = [
     'pydantic>=2.6.4',
     'python-multipart>=0.0.9'
 ]
+
+# Configurações padrão que podem ser sobrescritas via variáveis de ambiente
+DEFAULT_HOST = os.getenv('WHATSAPP_BOT_HOST', '0.0.0.0')
+try:
+    DEFAULT_PORT = int(os.getenv('WHATSAPP_BOT_PORT', '8000'))
+except ValueError:
+    DEFAULT_PORT = 8000
+DEFAULT_PUBLIC_URL = os.getenv('WHATSAPP_BOT_PUBLIC_URL', 'http://78.46.250.112/')
 
 def check_and_install_dependencies():
     """Verifica e instala dependências necessárias"""
@@ -91,19 +100,21 @@ def create_data_file():
             json.dump(initial_data, f, indent=2, ensure_ascii=False)
         print("📄 Arquivo de dados inicial criado")
 
-def run_server(host="127.0.0.1", port=8000, dev_mode=False):
+def run_server(host=DEFAULT_HOST, port=DEFAULT_PORT, dev_mode=False, public_url=None):
     """Executa o servidor FastAPI"""
     try:
         import uvicorn
         from backend.server import app
-        
+
+        base_url = (public_url or f"http://{host}:{port}").rstrip('/')
+
         print(f"""
 🚀 Iniciando WhatsApp Bot Management System
 ══════════════════════════════════════════
 
-📍 URL do sistema: http://{host}:{port}
-📖 Documentação da API: http://{host}:{port}/docs
-🔧 Interface administrativa: http://{host}:{port}/redoc
+📍 URL do sistema: {base_url}/
+📖 Documentação da API: {base_url}/docs
+🔧 Interface administrativa: {base_url}/redoc
 
 💡 Para parar o servidor, pressione Ctrl+C
         """)
@@ -141,24 +152,25 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exemplos de uso:
-  python main.py                    # Servidor padrão (localhost:8000)
+  python main.py                    # Servidor padrão (acesso: http://78.46.250.112/)
   python main.py --port 8080        # Porta customizada
-  python main.py --host 0.0.0.0     # Aceitar conexões externas
+  python main.py --host 127.0.0.1   # Forçar acesso apenas local
+  python main.py --public-url http://meuservidor.com/   # URL pública personalizada
   python main.py --dev              # Modo desenvolvimento (auto-reload)
         """
     )
-    
+
     parser.add_argument(
-        '--host', 
-        default='127.0.0.1',
-        help='Host do servidor (padrão: 127.0.0.1)'
+        '--host',
+        default=DEFAULT_HOST,
+        help=f'Host do servidor (padrão: {DEFAULT_HOST})'
     )
-    
+
     parser.add_argument(
-        '--port', 
-        type=int, 
-        default=8000,
-        help='Porta do servidor (padrão: 8000)'
+        '--port',
+        type=int,
+        default=DEFAULT_PORT,
+        help=f'Porta do servidor (padrão: {DEFAULT_PORT})'
     )
     
     parser.add_argument(
@@ -171,6 +183,12 @@ Exemplos de uso:
         '--skip-install',
         action='store_true',
         help='Pular verificação e instalação de dependências'
+    )
+
+    parser.add_argument(
+        '--public-url',
+        default=DEFAULT_PUBLIC_URL,
+        help=f'URL pública de acesso (padrão: {DEFAULT_PUBLIC_URL})'
     )
     
     args = parser.parse_args()
@@ -201,7 +219,14 @@ Exemplos de uso:
             return False
     
     # Executar servidor
-    return run_server(args.host, args.port, args.dev)
+    public_url = (args.public_url or '').strip() or None
+
+    return run_server(
+        host=args.host,
+        port=args.port,
+        dev_mode=args.dev,
+        public_url=public_url
+    )
 
 if __name__ == "__main__":
     success = main()
