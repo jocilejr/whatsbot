@@ -40,8 +40,10 @@ python main.py
 # Porta customizada
 python main.py --port 8080
 
-# Restringir acesso apenas ao servidor
-python main.py --host 127.0.0.1
+alterar-ip-de-acesso-para-78.46.250.112-gi6zdu
+# Definir explicitamente o IP do servidor
+python main.py --host 78.46.250.112
+
 
 # Definir URL pública personalizada
 python main.py --public-url http://meuservidor.com/
